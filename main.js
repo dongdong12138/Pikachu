@@ -12,7 +12,7 @@
                 window.clearInterval(id)
                 fn && fn.call()
             }
-        }, 10)
+        }, 40)
     }
     let code = `
     /* 好了，我现在要开始画一个皮卡丘了 */
