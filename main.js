@@ -1,25 +1,44 @@
-!function() {
+!function () {
+    var duration = 50
+    $('.actions').on('click', 'button', (e) => {
+        let $button = $(e.currentTarget)
+        let speed = $button.attr('data-speed')
+        console.log(speed)
+        $button.addClass('active').siblings('.active').removeClass('active')
+        switch(speed) {
+            case 'slow':
+                duration = 100
+                break
+            case 'normal':
+                duration = 50
+                break
+            case 'fast':
+                duration = 10
+                break
+        }
+    })
+
     function writeCode(prefix, code, fn) {
         let container = document.querySelector('.code')
         let styleTag = document.querySelector('#styleTag')
         let n = 0
-        let id = setInterval(() => {
+        let id = setTimeout(function run() {
             n += 1
             container.innerHTML = code.substring(0, n)
             container.scrollTop = container.scrollHeight
             styleTag.innerHTML = code.substring(0, n)
-            if (n >= code.length) {
-                window.clearInterval(id)
+            if (n < code.length) {
+                id = setTimeout(run, duration)
+            } else {
                 fn && fn.call()
             }
-        }, 40)
+        }, duration)
     }
     let code = `
     /* 好了，我现在要开始画一个皮卡丘了 */
     /* 首先准备点东西 */
     .preview {
         height: 100%;
-        border: 1px solid green;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -153,4 +172,6 @@
       /* 送给你咯 😊 */
     `
     writeCode('', code)
+
+
 }.call()
